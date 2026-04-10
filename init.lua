@@ -351,11 +351,11 @@ require('lazy').setup({
 
         -- `build` is used to run some command when the plugin is installed/updated.
         -- This is only run then, not every time Neovim starts up.
-        build = 'make',
+        build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
 
         -- `cond` is a condition used to determine whether this plugin should be
         -- installed and loaded.
-        cond = function() return vim.fn.executable 'make' == 1 end,
+        cond = function() return vim.fn.executable 'cmake' == 1 end,
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
@@ -496,7 +496,12 @@ require('lazy').setup({
         ---@module 'mason.settings'
         ---@type MasonSettings
         ---@diagnostic disable-next-line: missing-fields
-        opts = {},
+        opts = {
+          registries = {
+            'github:mason-org/mason-registry',
+            'github:Crashdummyy/mason-registry',
+          },
+        },
       },
       -- Maps LSP server names between nvim-lspconfig and Mason package names.
       'mason-org/mason-lspconfig.nvim',
@@ -605,7 +610,7 @@ require('lazy').setup({
       ---@type table<string, vim.lsp.Config>
       local servers = {
         -- clangd = {},
-        gopls = {},
+        -- gopls = {},
         pyright = {},
         bashls = {
           cmd = { 'bash-language-server', 'start' },
@@ -647,6 +652,16 @@ require('lazy').setup({
           end,
           settings = {
             Lua = {},
+          },
+        },
+        roslyn = {
+          cmd = {
+            'C:\\Program Files\\RoslynLS\\content\\LanguageServer\\win-x64\\Microsoft.CodeAnalysis.LanguageServer.exe',
+            '--logLevel', -- this property is required by the server
+            'Information',
+            '--extensionLogDirectory', -- this property is required by the server
+            vim.fs.joinpath(vim.uv.os_tmpdir(), 'roslyn_ls/logs'),
+            '--stdio',
           },
         },
       }
