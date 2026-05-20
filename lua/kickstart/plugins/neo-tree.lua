@@ -19,9 +19,9 @@ return {
         mappings = {
           ['\\'] = 'close_window',
           -- Map 'tf' to Telescope find_files in the current directory
-          ['tf'] = 'telescope_find',
+          ['Tf'] = 'telescope_find',
           -- Map 'tg' to Telescope live_grep in the current directory
-          ['tg'] = 'telescope_grep',
+          ['Tg'] = 'telescope_grep',
         },
       },
       commands = {
