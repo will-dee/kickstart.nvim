@@ -384,15 +384,24 @@ require('lazy').setup({
 
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
+      local actions = require 'telescope.actions'
+
       require('telescope').setup {
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
+        defaults = {
+          mappings = {
+            i = {
+              -- Add mapping for C-s to vsplit because C-v is a system mapping for paste on Windows
+              ['<C-s>'] = actions.select_vertical,
+            },
+            n = {
+              -- Add mapping for C-s to vsplit because C-v is a system mapping for paste on Windows
+              ['<C-s>'] = actions.select_vertical,
+            },
+          },
+        },
         pickers = {
           find_files = {
             hidden = true,
@@ -707,7 +716,7 @@ require('lazy').setup({
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
+        local disable_filetypes = { c = true, cpp = true, cs = true }
         if disable_filetypes[vim.bo[bufnr].filetype] then
           return nil
         else
